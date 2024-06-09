@@ -22,6 +22,12 @@ class SudokuSolver:
 
 
     def print_sudoku(self, first_sudoku, current_sudoku):
+        """Print last and current sudoku
+
+        Args:
+            first_sudoku (_type_): Sudoku to be modified
+            current_sudoku (_type_): Current sudoku solution
+        """
 
         total_empty = len(self.get_empty_positions(current_sudoku))
         (
@@ -73,6 +79,15 @@ class SudokuSolver:
 
     @staticmethod
     def get_line_numbers(sudoku, line):
+        """Return all line numbers
+
+        Args:
+            sudoku (_type_): Sudoku
+            line (_type_): Line position
+
+        Returns:
+            _type_: All non zero numbers from line
+        """
         return filter(lambda x: x, sudoku[line])
 
     @staticmethod
@@ -134,6 +149,18 @@ class SudokuSolver:
     def line_exclusion_inference(
         self, sudoku, i, quadrant, other_positions, possible_numbers
     ):
+        """Sudoku technique for line exclusion em number
+
+        Args:
+            sudoku (_type_): Sudoku
+            i (_type_): Line
+            quadrant (_type_): Quadrant description
+            other_positions (_type_): Other positions from quadrant
+            possible_numbers (_type_): All possible numbers from empty position
+
+        Returns:
+            Optional int: Chosen number if possible, else None
+        """
         chosen_number = None
         line_positions_filled = [
             column for line, column in other_positions if line == i
@@ -156,6 +183,18 @@ class SudokuSolver:
     def column_exclusion_inference(
         self, sudoku, j, quadrant, other_positions, possible_numbers
     ):
+        """Sudoku technique for column exclusion em number
+
+        Args:
+            sudoku (list[list]): Sudoku
+            j (int): Line
+            quadrant (tuple): Quadrant description
+            other_positions (list): Other positions from quadrant
+            possible_numbers (set): All possible numbers from empty position
+
+        Returns:
+            Optional int: Chosen number if possible, else None
+        """
         chosen_number = None
         column_positions_filled = [
             line for line, column in other_positions if column == j
@@ -177,8 +216,21 @@ class SudokuSolver:
         return chosen_number
 
     def line_and_column_exclusion_inference(
-        self, sudoku, i, j, quadrant, possible_numbers
+        self, sudoku, i:  int, j:int, quadrant:tuple, possible_numbers:set
     ):
+        """Sudoku technique for line AND column exclusion em number
+
+        Args:
+            sudoku (list[list]): Sudoku
+            i (int): Line
+            j (int): Column
+            quadrant (tuple): Quadrant description
+            other_positions (list): Other positions from quadrant
+            possible_numbers (set): All possible numbers from empty position
+
+        Returns:
+            Optional int: Chosen number if possible, else None
+        """
         lines_to_verify = [line for line in quadrant[0] if line != i]
 
         columns_to_verify = [
@@ -285,6 +337,14 @@ class SudokuSolver:
 
     @staticmethod
     def get_empty_value(sudoku):
+        """Gets first empty value found
+
+        Args:
+            sudoku (list[list]): sudoku
+
+        Returns:
+            Optional[int]: Empty value if exists
+        """
         for i in range(9):
             for j in range(9):
                 if sudoku[i][j] == 0:
@@ -292,6 +352,16 @@ class SudokuSolver:
         return None
 
     def is_number_valid(self, sudoku, number, empty_value):
+        """Checks if number can be placed on that position
+
+        Args:
+            sudoku (_type_): Sudoku
+            number (_type_): Number
+            empty_value (_type_): Empty value position
+
+        Returns:
+            _type_: _description_
+        """
 
         i, j = empty_value
 
@@ -311,6 +381,15 @@ class SudokuSolver:
         return True
 
     def apply_backtracking_strategy(self, sudoku, empty_positions: dict):
+        """Applies backtracking strategy with recursion
+
+        Args:
+            sudoku (_type_): sudoku
+            empty_positions (dict): Empty positions info
+
+        Returns:
+            _type_: _description_
+        """
 
         empty_value = self.get_empty_value(sudoku)
         if not empty_value:
@@ -326,6 +405,7 @@ class SudokuSolver:
         return False
 
     def solve(self):
+        """Executes strategies"""
 
         start = time.perf_counter()
 
