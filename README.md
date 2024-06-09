@@ -25,3 +25,9 @@ Difícil:
 
 
 Tivemos um tempo médio de 1.5ms para sudokus fáceis, 8ms para sudokus médios e 40ms para sudokus difíceis.
+
+
+Para executar o código, pode rodar apenas o main.py, apenas bibliotecas nativas foram utilizadas.
+ ```
+ python main.py
+ ```
